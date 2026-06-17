@@ -23,7 +23,7 @@ class SertifikasiSkemaController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'kode'               => 'required|string|max:50|unique:sertifikasi_skemas',
+            'kode'               => 'required|string|max:50',
             'nama'               => 'required|string|max:255',
             'description'        => 'nullable|string',
             'level'              => 'required|in:Muda,Madya,Utama',
@@ -65,7 +65,7 @@ class SertifikasiSkemaController extends Controller
     public function update(Request $request, SertifikasiSkema $skema)
     {
         $validated = $request->validate([
-            'kode'               => 'required|string|max:50|unique:sertifikasi_skemas,kode,' . $skema->id,
+            'kode'               => 'required|string|max:50',
             'nama'               => 'required|string|max:255',
             'description'        => 'nullable|string',
             'level'              => 'required|in:Muda,Madya,Utama',
