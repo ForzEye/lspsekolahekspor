@@ -33,6 +33,7 @@ class SertifikasiSkemaController extends Controller
             'metode_pelaksanaan' => 'nullable|string|max:255',
             'masa_berlaku'       => 'nullable|string|max:255',
             'jumlah_unit'        => 'nullable|integer',
+            'harga'              => 'nullable|numeric|min:0',
             'units'              => 'nullable|array',
             'image'              => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
         ]);
@@ -74,6 +75,7 @@ class SertifikasiSkemaController extends Controller
             'metode_pelaksanaan' => 'nullable|string|max:255',
             'masa_berlaku'       => 'nullable|string|max:255',
             'jumlah_unit'        => 'nullable|integer',
+            'harga'              => 'nullable|numeric|min:0',
             'units'              => 'nullable|array',
             'image'              => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
         ]);

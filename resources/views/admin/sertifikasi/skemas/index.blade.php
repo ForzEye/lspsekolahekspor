@@ -32,6 +32,7 @@
                 <thead class="bg-gray-50/50 border-b border-gray-100">
                     <tr>
                         <th class="text-left px-8 py-5 text-[10px] font-black text-gray-400 uppercase tracking-[0.2em]">Scheme Name & Code</th>
+                        <th class="text-left px-6 py-5 text-[10px] font-black text-gray-400 uppercase tracking-[0.2em]">Harga</th>
                         <th class="text-left px-6 py-5 text-[10px] font-black text-gray-400 uppercase tracking-[0.2em]">Operational Status</th>
                         <th class="text-right px-8 py-5 text-[10px] font-black text-gray-400 uppercase tracking-[0.2em]">Management</th>
                     </tr>
@@ -51,6 +52,13 @@
                                         <p class="text-gray-400 text-[10px] mt-1 font-mono font-bold tracking-widest uppercase opacity-70 group-hover:opacity-100 transition-opacity">{{ $skema->kode }}</p>
                                     </div>
                                 </div>
+                            </td>
+                            <td class="px-6 py-6 text-sm font-bold text-gray-700">
+                                @if($skema->harga)
+                                    Rp {{ number_format($skema->harga, 0, ',', '.') }}
+                                @else
+                                    <span class="text-gray-400 font-normal">-</span>
+                                @endif
                             </td>
                             <td class="px-6 py-6">
                                 <div class="inline-flex items-center gap-2.5 px-4 py-2 rounded-2xl text-[10px] font-bold border

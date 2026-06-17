@@ -69,6 +69,11 @@
                         <div>
                             <div class="flex items-center justify-between mb-4">
                                 <span class="px-3 py-1 bg-gray-50 rounded-lg text-[10px] font-mono text-gray-400 font-bold tracking-widest">{{ $skema->kode }}</span>
+                                @if($skema->harga)
+                                    <span class="text-sm font-extrabold text-accent">Rp {{ number_format($skema->harga, 0, ',', '.') }}</span>
+                                @else
+                                    <span class="text-xs text-gray-400 font-bold">Hubungi Kami</span>
+                                @endif
                             </div>
 
                             <h3 class="font-display font-extrabold text-primary text-xl mb-4 group-hover:text-accent transition-colors leading-tight">

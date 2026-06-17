@@ -123,7 +123,14 @@
                             <h3 class="text-xl font-bold font-display text-primary mb-1 group-hover:text-accent transition-colors">
                                 <a href="{{ route('sertifikasi.detail', $program->id) }}">{{ $program->nama }}</a>
                             </h3>
-                            <span class="text-xs font-mono font-bold text-accent block mb-4">{{ $program->kode }}</span>
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="text-xs font-mono font-bold text-accent">{{ $program->kode }}</span>
+                                @if($program->harga)
+                                    <span class="text-sm font-extrabold text-accent">Rp {{ number_format($program->harga, 0, ',', '.') }}</span>
+                                @else
+                                    <span class="text-xs text-gray-400 font-bold">Hubungi Kami</span>
+                                @endif
+                            </div>
                             <p class="text-gray-500 text-sm line-clamp-3 mb-6">
                                 {{ $program->description }}
                             </p>

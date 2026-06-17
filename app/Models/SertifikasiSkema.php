@@ -8,13 +8,14 @@ class SertifikasiSkema extends Model
 {
     protected $fillable = [
         'kode', 'nama', 'description', 'level', 'requirements', 'sort_order', 'is_active',
-        'metode_pelaksanaan', 'masa_berlaku', 'jumlah_unit', 'units', 'image',
+        'metode_pelaksanaan', 'masa_berlaku', 'jumlah_unit', 'harga', 'units', 'image',
     ];
 
     protected $casts = [
         'requirements' => 'array',
         'units'        => 'array',
         'is_active'    => 'boolean',
+        'harga'        => 'float',
     ];
 
     public function scopeActive($query)
