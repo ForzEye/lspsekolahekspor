@@ -35,6 +35,7 @@ class HeroController extends Controller
             'stat_3_label'        => 'nullable|string|max:100',
             'is_active'           => 'nullable|boolean',
             'image'               => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+            'sk_pdf'              => 'nullable|file|mimes:pdf|max:10240',
         ]);
 
         $data['is_active'] = $request->boolean('is_active');
@@ -45,6 +46,13 @@ class HeroController extends Controller
                 Storage::delete($hero->image);
             }
             $data['image'] = $request->file('image')->store('hero');
+        }
+
+        if ($request->hasFile('sk_pdf')) {
+            if ($hero && $hero->sk_pdf) {
+                Storage::delete($hero->sk_pdf);
+            }
+            $data['sk_pdf'] = $request->file('sk_pdf')->store('hero_sk');
         }
 
         if ($hero) {

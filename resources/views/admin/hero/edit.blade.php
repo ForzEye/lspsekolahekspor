@@ -90,6 +90,25 @@
                     <p class="text-gray-400 text-xs mt-1">Rekomendasi ukuran: <strong>800 x 1000 piksel (Rasio 4:5)</strong>. Max 2MB. Kosongkan jika tidak ingin mengganti.</p>
                 </div>
 
+                {{-- SK PDF --}}
+                @if($hero->sk_pdf)
+                    <div class="bg-soft rounded-xl p-4 flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <span class="text-3xl">📄</span>
+                            <div>
+                                <p class="text-xs font-semibold text-gray-700">SK Sertifikasi Jarak Jauh LSP SEN</p>
+                                <a href="{{ $hero->sk_pdf_url }}" target="_blank" class="text-xs font-bold text-accent hover:underline">Lihat PDF SK</a>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1.5">{{ $hero->sk_pdf ? 'Ganti File SK (PDF)' : 'Upload File SK (PDF)' }}</label>
+                    <input type="file" name="sk_pdf" accept="application/pdf"
+                           class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm file:mr-3 file:text-xs file:font-semibold file:rounded-lg file:border-0 file:bg-primary file:text-white hover:file:bg-primary-mid transition-colors">
+                    <p class="text-gray-400 text-xs mt-1">Hanya file PDF. Max 10MB. Kosongkan jika tidak ingin mengganti.</p>
+                </div>
+
                 <label class="flex items-center gap-3 cursor-pointer">
                     <input type="checkbox" name="is_active" value="1" {{ old('is_active', $hero->is_active) ? 'checked' : '' }}
                            class="w-5 h-5 rounded accent-primary">

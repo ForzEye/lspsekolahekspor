@@ -14,7 +14,7 @@ class Hero extends Model
         'stat_1_value', 'stat_1_label',
         'stat_2_value', 'stat_2_label',
         'stat_3_value', 'stat_3_label',
-        'image', 'is_active',
+        'image', 'sk_pdf', 'is_active',
     ];
 
     protected $casts = [
@@ -33,5 +33,12 @@ class Hero extends Model
         return $this->image
             ? Storage::url($this->image)
             : asset('images/placeholder.png');
+    }
+
+    public function getSkPdfUrlAttribute(): ?string
+    {
+        return $this->sk_pdf
+            ? Storage::url($this->sk_pdf)
+            : null;
     }
 }
