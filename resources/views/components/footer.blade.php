@@ -110,7 +110,7 @@
         @if($globalContact && $globalContact->maps_embed_url)
             <div class="border-t border-white/10" style="padding-top: 2.5rem; padding-bottom: 2rem;">
                 <h4 class="font-display font-black text-white mb-6 text-xs uppercase tracking-widest leading-none">Lokasi Kami</h4>
-                <div class="rounded-3xl overflow-hidden border border-white/10 shadow-lg relative w-full" style="height: 320px;" id="footer-maps-embed-container">
+                <div class="rounded-3xl border border-white/10 shadow-lg w-full" style="height: 320px; background-color: #ffffff; padding: 12px;" id="footer-maps-embed-container">
                     @if(str_contains($globalContact->maps_embed_url, '<iframe'))
                         {!! $globalContact->maps_embed_url !!}
                     @else
@@ -122,9 +122,7 @@
                         width: 100% !important;
                         height: 100% !important;
                         border: 0 !important;
-                        position: absolute;
-                        top: 0;
-                        left: 0;
+                        border-radius: 20px !important;
                     }
                 </style>
             </div>
