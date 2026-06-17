@@ -13,6 +13,8 @@ use App\Models\SertifikasiSkema;
 use App\Models\Setting;
 use App\Models\TeamMember;
 use App\Models\Testimonial;
+use App\Models\SertifikasiStatistic;
+use App\Models\SebaranPeserta;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -34,8 +36,10 @@ class PublicController extends Controller
     {
         $about  = About::first();
         $team   = TeamMember::active()->ordered()->get();
+        $statistics = SertifikasiStatistic::orderBy('sort_order')->get();
+        $sebarans = SebaranPeserta::where('jumlah_peserta', '>', 0)->get();
 
-        return view('pages.profil', compact('about', 'team'));
+        return view('pages.profil', compact('about', 'team', 'statistics', 'sebarans'));
     }
 
     public function sertifikasi(): View

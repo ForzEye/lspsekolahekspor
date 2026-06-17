@@ -12,6 +12,8 @@ use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\ActivityController;
 use App\Http\Controllers\Admin\TeamMemberController;
 use App\Http\Controllers\Admin\TestimonialController;
+use App\Http\Controllers\Admin\SertifikasiStatisticController;
+use App\Http\Controllers\Admin\SebaranPesertaController;
 use App\Http\Controllers\PublicController;
 use Illuminate\Support\Facades\Route;
 
@@ -62,6 +64,10 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
 
     // Feedback
     Route::resource('testimonials', TestimonialController::class);
+
+    // Statistics & Sebaran
+    Route::resource('statistics', SertifikasiStatisticController::class);
+    Route::resource('sebaran', SebaranPesertaController::class);
 
     // Contact & Settings
     Route::get('/contact', [ContactInfoController::class, 'edit'])->name('contact.edit');

@@ -140,6 +140,207 @@
 
 @endif
 
+{{-- Section: Statistik Kelulusan Asesi --}}
+@if($statistics->isNotEmpty())
+<section class="py-24 bg-white relative overflow-hidden border-t border-gray-150/20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-3xl mx-auto mb-16">
+            <span class="inline-block bg-primary/5 text-accent font-bold text-[10px] uppercase tracking-[0.3em] rounded-full px-5 py-2 mb-6 border border-primary/5">STATISTIK KELULUSAN</span>
+            <h2 class="font-display text-4xl lg:text-5xl font-extrabold text-primary mb-6">Statistik Kelulusan Asesi</h2>
+            <p class="text-gray-500 text-sm font-medium leading-relaxed">Berikut adalah data akumulasi peserta kompeten dan belum kompeten berdasarkan skema sertifikasi LSP Sekolah Ekspor Nasional.</p>
+        </div>
+
+        <div class="overflow-x-auto rounded-[32px] border border-[#cbd5e1] shadow-premium">
+            <table class="w-full text-left border-collapse min-w-[700px]">
+                <thead>
+                    <tr class="bg-[#0f2e5c] text-white">
+                        <th class="px-6 py-4.5 text-xs font-black text-center uppercase tracking-wider w-16 border-r border-white/10">NO</th>
+                        <th class="px-6 py-4.5 text-xs font-black uppercase tracking-wider border-r border-white/10">PROGRAM SKEMA SERTIFIKASI</th>
+                        <th class="px-6 py-4.5 text-xs font-black text-center uppercase tracking-wider w-48 border-r border-white/10">PESERTA KOMPETEN</th>
+                        <th class="px-6 py-4.5 text-xs font-black text-center uppercase tracking-wider w-48">PESERTA BELUM KOMPETEN</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-[#cbd5e1] text-primary">
+                    @foreach($statistics as $index => $stat)
+                        <tr class="odd:bg-[#f1f5f9] even:bg-[#e2e8f0]/40 transition-colors hover:bg-primary/5">
+                            <td class="px-6 py-4 text-sm font-bold text-center border-r border-[#cbd5e1]">{{ $index + 1 }}</td>
+                            <td class="px-6 py-4 text-sm font-bold border-r border-[#cbd5e1]">{{ $stat->nama_program }}</td>
+                            <td class="px-6 py-4 text-sm font-black text-center text-green-700 border-r border-[#cbd5e1]">{{ number_format($stat->peserta_kompeten, 0, ',', '.') }}</td>
+                            <td class="px-6 py-4 text-sm font-black text-center text-red-500">
+                                {{ $stat->peserta_belum_kompeten > 0 ? number_format($stat->peserta_belum_kompeten, 0, ',', '.') : '-' }}
+                            </td>
+                        </tr>
+                    @endforeach
+                    {{-- Total Row --}}
+                    <tr class="bg-[#0284c7] text-white font-black text-sm uppercase tracking-wider">
+                        <td colspan="2" class="px-8 py-5 text-center font-black border-r border-white/10">JUMLAH ASESI</td>
+                        <td class="px-6 py-5 text-center font-black border-r border-white/10">{{ number_format($statistics->sum('peserta_kompeten'), 0, ',', '.') }}</td>
+                        <td class="px-6 py-5 text-center font-black">{{ number_format($statistics->sum('peserta_belum_kompeten'), 0, ',', '.') }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+@endif
+
+{{-- Section: Peta Sebaran Peserta --}}
+@if($sebarans->isNotEmpty())
+@push('head')
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <style>
+        #map {
+            height: 500px;
+            width: 100%;
+            border-radius: 24px;
+            z-index: 10;
+        }
+        /* Custom map marker overrides */
+        .custom-map-marker {
+            background: none !important;
+            border: none !important;
+        }
+        /* Pulse Animation Keyframes */
+        @keyframes pulse-ring {
+            0% {
+                transform: scale(0.3);
+                opacity: 0.85;
+            }
+            80%, 100% {
+                transform: scale(2.0);
+                opacity: 0;
+            }
+        }
+        .pulse-ring {
+            display: inline-block;
+            border-radius: 50%;
+            animation: pulse-ring 2s cubic-bezier(0.215, 0.610, 0.355, 1) infinite;
+        }
+        /* Premium custom tooltip styling */
+        .custom-tooltip-style {
+            background: #0f2e5c !important;
+            color: #ffffff !important;
+            border-radius: 12px !important;
+            padding: 8px 12px !important;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.15), 0 8px 10px -6px rgba(0, 0, 0, 0.15) !important;
+            border: 1px solid rgba(255, 255, 255, 0.15) !important;
+            font-family: 'Outfit', sans-serif !important;
+            pointer-events: none !important;
+        }
+        .custom-tooltip-style::before {
+            border-top-color: #0f2e5c !important;
+        }
+    </style>
+@endpush
+
+<section class="py-24 bg-soft relative overflow-hidden border-t border-gray-150/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-3xl mx-auto mb-16">
+            <span class="inline-block bg-primary/5 text-accent font-bold text-[10px] uppercase tracking-[0.3em] rounded-full px-5 py-2 mb-6 border border-primary/5">SEBARAN NASIONAL</span>
+            <h2 class="font-display text-4xl lg:text-5xl font-extrabold text-primary mb-6">Peta Sebaran Peserta</h2>
+            <p class="text-gray-500 text-sm font-medium leading-relaxed">Visualisasi penyebaran asesi kompeten LSP Sekolah Ekspor Nasional di seluruh penjuru wilayah Indonesia.</p>
+        </div>
+
+        <div class="relative w-full overflow-hidden bg-white rounded-[40px] p-4 md:p-8 border border-gray-150/40 shadow-premium">
+            <div id="map" class="w-full"></div>
+        </div>
+    </div>
+</section>
+
+@push('scripts')
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Center map on Indonesia center point
+            const map = L.map('map', {
+                center: [-2.5, 118.0],
+                zoom: 5,
+                scrollWheelZoom: false,
+                minZoom: 4,
+                maxZoom: 9
+            });
+
+            // Modern grayscale tiles (CartoDB Positron) to match premium website aesthetic
+            L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+                subdomains: 'abcd',
+                maxZoom: 20
+            }).addTo(map);
+
+            const sebarans = @json($sebarans);
+            
+            sebarans.forEach(function(item) {
+                if (item.latitude && item.longitude) {
+                    const lat = parseFloat(item.latitude);
+                    const lng = parseFloat(item.longitude);
+                    
+                    // Determine custom dimensions based on participant count
+                    let size = 16;
+                    let ringSize = 28;
+                    
+                    if (item.jumlah_peserta > 500) {
+                        size = 24;
+                        ringSize = 44;
+                    } else if (item.jumlah_peserta > 100) {
+                        size = 20;
+                        ringSize = 36;
+                    } else if (item.jumlah_peserta > 50) {
+                        size = 18;
+                        ringSize = 32;
+                    }
+
+                    const halfRing = ringSize / 2;
+
+                    // Custom HTML Marker matching the previous premium animation
+                    const customHtml = `
+                        <div class="relative flex items-center justify-center" style="width: ${ringSize}px; height: ${ringSize}px;">
+                            <!-- Outer Pulsating Ring -->
+                            <div class="absolute pulse-ring" style="width: ${ringSize}px; height: ${ringSize}px; background-color: rgba(249, 115, 22, 0.35);"></div>
+                            <!-- Core Inner Dot -->
+                            <div class="relative rounded-full border-2 border-white shadow-md" style="width: ${size}px; height: ${size}px; background-color: #f97316;"></div>
+                        </div>
+                    `;
+
+                    const customIcon = L.divIcon({
+                        html: customHtml,
+                        className: 'custom-map-marker',
+                        iconSize: [ringSize, ringSize],
+                        iconAnchor: [halfRing, halfRing]
+                    });
+
+                    // Create marker with custom icon
+                    const marker = L.marker([lat, lng], { icon: customIcon }).addTo(map);
+
+                    const formattedCount = new Intl.NumberFormat('id-ID').format(item.jumlah_peserta);
+                    
+                    const tooltipContent = `
+                        <div class="text-center font-sans">
+                            <h4 class="font-extrabold text-[12px] leading-tight text-white mb-0.5">${item.nama_wilayah}</h4>
+                            <p class="text-[11px] font-bold text-orange-400 m-0">${formattedCount} Peserta</p>
+                        </div>
+                    `;
+
+                    // Bind Leaflet Tooltip (triggers automatically on hover)
+                    marker.bindTooltip(tooltipContent, {
+                        permanent: false,
+                        direction: 'top',
+                        className: 'custom-tooltip-style',
+                        offset: L.point(0, -halfRing + 4)
+                    });
+                    
+                    // Dynamic click behavior to focus
+                    marker.on('click', function() {
+                        map.setView([lat, lng], 7);
+                    });
+                }
+            });
+        });
+    </script>
+@endpush
+@endif
+
 {{-- Struktur Organisasi --}}
 @if($team->isNotEmpty())
 <section class="py-24 bg-gradient-to-b from-white via-soft to-white overflow-hidden relative">
