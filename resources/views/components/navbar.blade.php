@@ -50,6 +50,10 @@
                 @auth
                     <a href="{{ route('admin.dashboard') }}" class="text-xs font-bold text-gray-400 hover:text-primary transition-colors">CMS Admin</a>
                 @endauth
+                <a href="https://lsplpksekolahekspor.nasonline.id/login" target="_blank" rel="noopener"
+                   class="bg-white border-2 border-primary/10 hover:border-primary text-primary font-bold rounded-2xl px-6 py-2.5 text-sm transition-all duration-300 hover:scale-105 active:scale-95 shadow-sm">
+                    Dashboard Sertifikasi
+                </a>
                 <a href="{{ route('daftar') }}"
                    class="bg-accent hover:bg-accent-dark text-white font-bold rounded-2xl px-6 py-3 text-sm transition-all duration-300 hover:scale-105 active:scale-95 shadow-glow hover:shadow-orange-200">
                     Daftar Sekarang
@@ -95,7 +99,11 @@
                 @endforeach
             </nav>
 
-            <div class="mt-auto">
+            <div class="mt-auto flex flex-col gap-4">
+                <a href="https://lsplpksekolahekspor.nasonline.id/login" target="_blank" rel="noopener"
+                   class="block w-full bg-white border-2 border-primary/15 text-primary text-center py-4 rounded-3xl font-bold text-xl shadow-sm">
+                    Dashboard Sertifikasi
+                </a>
                 <a href="{{ route('daftar') }}"
                    class="block w-full bg-accent text-white text-center py-4 rounded-3xl font-bold text-xl shadow-glow">
                     Daftar Sekarang
