@@ -154,10 +154,10 @@
             <table class="w-full text-left border-collapse min-w-[700px]">
                 <thead>
                     <tr class="text-white" style="background-color: #0f2e5c;">
-                        <th class="px-6 py-4.5 text-xs font-black text-center uppercase tracking-wider w-16 border-r border-white/10">NO</th>
-                        <th class="px-6 py-4.5 text-xs font-black uppercase tracking-wider border-r border-white/10">PROGRAM SKEMA SERTIFIKASI</th>
-                        <th class="px-6 py-4.5 text-xs font-black text-center uppercase tracking-wider w-48 border-r border-white/10">PESERTA KOMPETEN</th>
-                        <th class="px-6 py-4.5 text-xs font-black text-center uppercase tracking-wider w-48">PESERTA BELUM KOMPETEN</th>
+                        <th class="px-6 py-5 text-xs font-black text-center uppercase tracking-wider w-16 border-r border-white/10">NO</th>
+                        <th class="px-6 py-5 text-xs font-black uppercase tracking-wider border-r border-white/10">PROGRAM SKEMA SERTIFIKASI</th>
+                        <th class="px-6 py-5 text-xs font-black text-center uppercase tracking-wider w-48 border-r border-white/10">PESERTA KOMPETEN</th>
+                        <th class="px-6 py-5 text-xs font-black text-center uppercase tracking-wider w-48">PESERTA BELUM KOMPETEN</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-[#cbd5e1] text-primary">
