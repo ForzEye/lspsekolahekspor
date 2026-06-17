@@ -55,7 +55,7 @@
                     <button @click="currentTab = 'online'"
                             class="relative z-10 px-10 py-4 rounded-[26px] text-sm font-black transition-all duration-500"
                             :class="currentTab === 'online' ? 'text-white' : 'text-gray-400 hover:text-primary'">
-                        Online / Remote
+                        Online / Sertifikasi Jarak Jauh
                     </button>
                     {{-- Slider Background --}}
                     <div class="absolute inset-y-2 bg-primary rounded-[26px] transition-all duration-500 ease-spring shadow-lg shadow-primary/20"
@@ -259,7 +259,7 @@
                     <button @click="activeTab = 'jarak_jauh'"
                             class="relative z-10 px-10 py-4 rounded-[26px] text-sm font-black transition-all duration-500"
                             :class="activeTab === 'jarak_jauh' ? 'text-white' : 'text-gray-400 hover:text-primary'">
-                        Online / Remote
+                        Online / Sertifikasi Jarak Jauh
                     </button>
                     {{-- Slider Background --}}
                     <div class="absolute inset-y-2 bg-primary rounded-[26px] transition-all duration-500 ease-spring shadow-lg shadow-primary/20"

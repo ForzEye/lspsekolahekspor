@@ -68,7 +68,7 @@
             <div class="flex items-center justify-between mb-6 px-4">
                 <h2 class="font-display font-black text-accent text-xl flex items-center gap-3">
                     <span class="text-2xl">💻</span>
-                    Online / Remote
+                    Online / Sertifikasi Jarak Jauh
                 </h2>
                 <span class="text-[10px] font-black text-gray-400 bg-gray-50 px-3 py-1 rounded-full border border-gray-100 uppercase tracking-[0.1em]">{{ $alurs->where('type', 'jarak_jauh')->count() }} Steps</span>
             </div>
