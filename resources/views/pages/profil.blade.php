@@ -153,7 +153,7 @@
         <div class="overflow-x-auto rounded-[32px] border border-[#cbd5e1] shadow-premium">
             <table class="w-full text-left border-collapse min-w-[700px]">
                 <thead>
-                    <tr class="bg-[#0f2e5c] text-white">
+                    <tr class="text-white" style="background-color: #0f2e5c;">
                         <th class="px-6 py-4.5 text-xs font-black text-center uppercase tracking-wider w-16 border-r border-white/10">NO</th>
                         <th class="px-6 py-4.5 text-xs font-black uppercase tracking-wider border-r border-white/10">PROGRAM SKEMA SERTIFIKASI</th>
                         <th class="px-6 py-4.5 text-xs font-black text-center uppercase tracking-wider w-48 border-r border-white/10">PESERTA KOMPETEN</th>
@@ -172,7 +172,7 @@
                         </tr>
                     @endforeach
                     {{-- Total Row --}}
-                    <tr class="bg-[#0284c7] text-white font-black text-sm uppercase tracking-wider">
+                    <tr class="text-white font-black text-sm uppercase tracking-wider" style="background-color: #0284c7;">
                         <td colspan="2" class="px-8 py-5 text-center font-black border-r border-white/10">JUMLAH ASESI</td>
                         <td class="px-6 py-5 text-center font-black border-r border-white/10">{{ number_format($statistics->sum('peserta_kompeten'), 0, ',', '.') }}</td>
                         <td class="px-6 py-5 text-center font-black">{{ number_format($statistics->sum('peserta_belum_kompeten'), 0, ',', '.') }}</td>

@@ -16,16 +16,41 @@
             @method('PUT')
 
             <div class="space-y-5">
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1.5">Nama Wilayah / Kota <span class="text-red-500">*</span></label>
-                    <input type="text" list="wilayah-list" name="nama_wilayah" x-model="namaWilayah" @input="updateCoords()" required placeholder="Ketik atau pilih wilayah..."
-                           class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-primary/30 outline-none">
-                    <datalist id="wilayah-list">
-                        <template x-for="name in Object.keys(predefinedList)">
-                            <option :value="name"></option>
-                        </template>
-                    </datalist>
-                    <p class="text-xs text-gray-400 mt-1.5">💡 Ketik nama kota utama untuk memicu pengisian koordinat otomatis (misal: Surabaya, DKI Jakarta, Makassar).</p>
+                <div class="relative" x-data="{ open: false }" @click.away="open = false">
+                    <label class="block text-sm font-medium text-gray-700 mb-1.5">Nama Kabupaten / Kota <span class="text-red-500">*</span></label>
+                    <div class="relative">
+                        <input type="text" autocomplete="off" name="nama_wilayah" x-model="namaWilayah" @focus="open = true" @input="open = true; updateCoords()" required placeholder="Ketik atau pilih kabupaten/kota..."
+                               class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-primary/30 outline-none">
+                        <div class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-455 pointer-events-none">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </div>
+                    </div>
+                    
+                    <!-- Custom Dropdown Menu -->
+                    <div x-show="open" 
+                         x-transition:enter="transition ease-out duration-100"
+                         x-transition:enter-start="opacity-0 transform scale-95"
+                         x-transition:enter-end="opacity-100 transform scale-100"
+                         x-transition:leave="transition ease-in duration-75"
+                         x-transition:leave-start="opacity-100 transform scale-100"
+                         x-transition:leave-end="opacity-0 transform scale-95"
+                         class="absolute z-50 left-0 right-0 mt-1.5 bg-white border border-gray-200 rounded-xl shadow-xl max-h-60 overflow-y-auto"
+                         style="display: none;">
+                        <div class="p-1">
+                            <template x-for="name in Object.keys(predefinedList).filter(n => n.toLowerCase().includes(namaWilayah.toLowerCase()))" :key="name">
+                                <button type="button" @click="namaWilayah = name; updateCoords(); open = false" 
+                                        class="w-full text-left px-4 py-2.5 text-sm rounded-lg hover:bg-primary/5 hover:text-primary transition-colors focus:outline-none font-medium flex items-center justify-between text-gray-700">
+                                    <span x-text="name"></span>
+                                    <span class="text-[10px] text-gray-400 font-mono">Auto-fill</span>
+                                </button>
+                            </template>
+                            <div x-show="Object.keys(predefinedList).filter(n => n.toLowerCase().includes(namaWilayah.toLowerCase())).length === 0" 
+                                 class="px-4 py-2.5 text-xs text-gray-455 italic font-medium">
+                                Gunakan nama kustom
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-xs text-gray-400 mt-1.5">💡 Pilih kabupaten/kota utama dari daftar untuk pengisian otomatis koordinat Latitude & Longitude.</p>
                     @error('nama_wilayah')
                         <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                     @enderror
@@ -86,6 +111,9 @@ function wilayahManager() {
             'Palembang': {lat: -2.976074, lng: 104.775431},
             'Bandar Lampung': {lat: -5.397140, lng: 105.266792},
             'DKI Jakarta': {lat: -6.208763, lng: 106.845599},
+            'Bogor': {lat: -6.597147, lng: 106.806039},
+            'Kabupaten Bogor': {lat: -6.597147, lng: 106.806039},
+            'Kota Bogor': {lat: -6.597147, lng: 106.806039},
             'Bandung': {lat: -6.917464, lng: 107.619123},
             'Semarang': {lat: -6.966667, lng: 110.416664},
             'Yogyakarta': {lat: -7.795580, lng: 110.369490},
