@@ -34,15 +34,39 @@
 
 {{-- Section 2: Skema Sertifikasi (Bento-ish Grid) --}}
 @if($skemas->isNotEmpty())
-<section id="skema-sertifikasi" class="py-24 bg-soft">
+@php
+    $onlineSkemas = $skemas->filter(fn($s) => in_array(strtolower($s->metode_pelaksanaan), ['online', 'jarak jauh']));
+    $offlineSkemas = $skemas->filter(fn($s) => !in_array(strtolower($s->metode_pelaksanaan), ['online', 'jarak jauh']));
+@endphp
+<section id="skema-sertifikasi" class="py-24 bg-soft" x-data="{ currentTab: 'offline' }">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center max-w-3xl mx-auto mb-16">
             <h2 class="font-display text-4xl lg:text-5xl font-extrabold text-primary mb-6">Skema Sertifikasi Tersedia</h2>
-            <p class="text-gray-500">Program sertifikasi kami dirancang khusus untuk mencakup seluruh aspek ekspor modern.</p>
+            <p class="text-gray-500 mb-10">Program sertifikasi kami dirancang khusus untuk mencakup seluruh aspek ekspor modern.</p>
+
+            {{-- Tab Switch Modern --}}
+            <div class="flex justify-center">
+                <div class="bg-gray-100/50 p-2 rounded-[32px] inline-flex gap-2 border border-white relative shadow-inner">
+                    <button @click="currentTab = 'offline'"
+                            class="relative z-10 px-10 py-4 rounded-[26px] text-sm font-black transition-all duration-500"
+                            :class="currentTab === 'offline' ? 'text-white' : 'text-gray-400 hover:text-primary'">
+                        Offline / Tatap Muka
+                    </button>
+                    <button @click="currentTab = 'online'"
+                            class="relative z-10 px-10 py-4 rounded-[26px] text-sm font-black transition-all duration-500"
+                            :class="currentTab === 'online' ? 'text-white' : 'text-gray-400 hover:text-primary'">
+                        Online / Remote
+                    </button>
+                    {{-- Slider Background --}}
+                    <div class="absolute inset-y-2 bg-primary rounded-[26px] transition-all duration-500 ease-spring shadow-lg shadow-primary/20"
+                         :style="currentTab === 'offline' ? 'left: 8px; width: calc(50% - 12px)' : 'left: calc(50% + 4px); width: calc(50% - 12px)'"></div>
+                </div>
+            </div>
         </div>
 
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            @foreach($skemas as $index => $skema)
+        {{-- Offline Schemes --}}
+        <div x-show="currentTab === 'offline'" x-transition class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            @forelse($offlineSkemas as $index => $skema)
                 <div x-data="{ show: false }" x-intersect="show = true"
                      :class="show ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-12 scale-95'"
                      :style="`transition-delay: {{ $index * 100 }}ms`"
@@ -63,14 +87,13 @@
 
                     {{-- Card Content --}}
                     <div class="p-8 flex-1 flex flex-col justify-between relative">
-                        {{-- Decorative Glow --}}
                         <div class="absolute -top-12 -right-12 w-32 h-32 bg-accent/5 rounded-full blur-2xl group-hover:bg-accent/20 transition-all pointer-events-none"></div>
 
                         <div>
                             <div class="flex items-center justify-between mb-4">
                                 <span class="px-3 py-1 bg-gray-50 rounded-lg text-[10px] font-mono text-gray-400 font-bold tracking-widest">{{ $skema->kode }}</span>
                                 @if($skema->metode_pelaksanaan)
-                                    <span class="px-3 py-1 rounded-lg text-[10px] font-black tracking-wider uppercase {{ in_array(strtolower($skema->metode_pelaksanaan), ['online', 'jarak jauh']) ? 'bg-blue-50 text-blue-600 border border-blue-100' : 'bg-orange-50 text-orange-600 border border-orange-100' }}">
+                                    <span class="px-3 py-1 rounded-lg text-[10px] font-black tracking-wider uppercase bg-orange-50 text-orange-600 border border-orange-100">
                                         {{ $skema->metode_pelaksanaan }}
                                     </span>
                                 @endif
@@ -120,7 +143,97 @@
                         </div>
                     </div>
                 </div>
-            @endforeach
+            @empty
+                <div class="col-span-full text-center py-16 bg-white rounded-[40px] border border-gray-100">
+                    <p class="text-gray-400 font-bold">Tidak ada skema sertifikasi offline saat ini.</p>
+                </div>
+            @endforelse
+        </div>
+
+        {{-- Online Schemes --}}
+        <div x-show="currentTab === 'online'" x-transition class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" x-cloak>
+            @forelse($onlineSkemas as $index => $skema)
+                <div x-data="{ show: false }" x-intersect="show = true"
+                     :class="show ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-12 scale-95'"
+                     :style="`transition-delay: {{ $index * 100 }}ms`"
+                     class="bg-white rounded-[40px] shadow-sm hover:shadow-premium transition-all duration-500 group relative overflow-hidden flex flex-col h-full">
+                    
+                    {{-- Card Image --}}
+                    <a href="{{ route('sertifikasi.detail', $skema->id) }}" class="relative aspect-video overflow-hidden w-full bg-primary-dark block">
+                        @if($skema->image_url)
+                            <img src="{{ $skema->image_url }}" alt="{{ $skema->nama }}" 
+                                 class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        @else
+                            <div class="w-full h-full bg-gradient-to-br from-primary to-primary-light flex items-center justify-center relative overflow-hidden">
+                                <div class="absolute inset-0 bg-cover bg-center opacity-10 group-hover:scale-110 transition-transform duration-700" style="background-image: url('{{ asset('img/hero-illustration.png') }}')"></div>
+                                <img src="{{ asset('img/site-logo.png') }}" class="h-12 w-auto object-contain filter brightness-0 invert opacity-20 group-hover:scale-110 transition-transform duration-700 relative z-10">
+                            </div>
+                        @endif
+                    </a>
+
+                    {{-- Card Content --}}
+                    <div class="p-8 flex-1 flex flex-col justify-between relative">
+                        <div class="absolute -top-12 -right-12 w-32 h-32 bg-accent/5 rounded-full blur-2xl group-hover:bg-accent/20 transition-all pointer-events-none"></div>
+
+                        <div>
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="px-3 py-1 bg-gray-50 rounded-lg text-[10px] font-mono text-gray-400 font-bold tracking-widest">{{ $skema->kode }}</span>
+                                @if($skema->metode_pelaksanaan)
+                                    <span class="px-3 py-1 rounded-lg text-[10px] font-black tracking-wider uppercase bg-blue-50 text-blue-600 border border-blue-100">
+                                        {{ $skema->metode_pelaksanaan }}
+                                    </span>
+                                @endif
+                            </div>
+
+                            <h3 class="font-display font-extrabold text-primary text-xl mb-4 group-hover:text-accent transition-colors leading-tight">
+                                <a href="{{ route('sertifikasi.detail', $skema->id) }}">{{ $skema->nama }}</a>
+                            </h3>
+
+                            <div class="mb-6 bg-gray-50/50 p-4 rounded-2xl border border-gray-100/50">
+                                <span class="text-[9px] font-black text-gray-400 uppercase tracking-widest block mb-1">Biaya Investasi</span>
+                                @if($skema->harga)
+                                    <span class="text-lg font-black text-accent">Rp {{ number_format($skema->harga, 0, ',', '.') }}</span>
+                                @else
+                                    <span class="text-sm font-bold text-gray-400">Hubungi Kami</span>
+                                @endif
+                            </div>
+
+                            @if($skema->description)
+                                <p class="text-gray-500 text-sm leading-relaxed mb-6">{{ $skema->description }}</p>
+                            @endif
+
+                            @if($skema->requirements)
+                                <div class="space-y-3 mb-6">
+                                    <h4 class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Prasyarat Utama</h4>
+                                    @foreach($skema->requirements as $req)
+                                        <div class="flex items-start gap-3">
+                                            <div class="w-5 h-5 rounded-full bg-green-100 text-green-600 flex items-center justify-center shrink-0 mt-0.5">
+                                                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                            </div>
+                                            <span class="text-xs font-bold text-gray-600">{{ $req }}</span>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            @endif
+                        </div>
+
+                        <div class="mt-auto flex gap-3">
+                            <a href="{{ route('sertifikasi.detail', $skema->id) }}"
+                               class="flex-1 text-center bg-gray-50 hover:bg-primary hover:text-white text-primary font-bold px-4 py-3 rounded-2xl text-xs transition-all duration-300">
+                                Detail Skema
+                            </a>
+                            <a href="{{ route('daftar') }}"
+                               class="flex-1 text-center bg-accent hover:bg-accent-dark text-white font-bold px-4 py-3 rounded-2xl text-xs transition-all duration-300 shadow-sm">
+                                Daftar
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            @empty
+                <div class="col-span-full text-center py-16 bg-white rounded-[40px] border border-gray-100">
+                    <p class="text-gray-400 font-bold">Tidak ada skema sertifikasi online saat ini.</p>
+                </div>
+            @endforelse
         </div>
     </div>
 </section>
