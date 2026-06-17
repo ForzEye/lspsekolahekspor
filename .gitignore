@@ -1,0 +1,67 @@
+/node_modules
+/vendor
+
+# Laravel-specific directories/files
+/public/build
+/public/hot
+/public/storage
+/storage/*.key
+/storage/pail
+/storage/framework/cache/data/*
+!/storage/framework/cache/data/.gitignore
+/storage/framework/sessions/*
+!/storage/framework/sessions/.gitignore
+/storage/framework/testing/*
+!/storage/framework/testing/.gitignore
+/storage/framework/views/*
+!/storage/framework/views/.gitignore
+/storage/logs/*
+!/storage/logs/.gitignore
+
+# Environment configurations and private keys
+.env
+.env.backup
+.env.decrypted
+.env.production
+.env.staging
+.env.testing
+.env.local
+.env.*.local
+.env.development
+.env.dev
+auth.json
+
+# IDEs and Editors
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.DS_Store
+Thumbs.db
+.phpunit.result.cache
+.phpunit.cache/
+.zed/
+.cursor/
+.nova/
+
+# Compiled files & Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+composer.phar
+
+# Development helper files
+_ide_helper.php
+_ide_helper_models.php
+.phpdoc/
+.phpactor.json
+Homestead.json
+Homestead.yaml
+docker-compose.override.yml
+
