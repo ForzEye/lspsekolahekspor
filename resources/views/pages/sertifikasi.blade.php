@@ -69,16 +69,25 @@
                         <div>
                             <div class="flex items-center justify-between mb-4">
                                 <span class="px-3 py-1 bg-gray-50 rounded-lg text-[10px] font-mono text-gray-400 font-bold tracking-widest">{{ $skema->kode }}</span>
-                                @if($skema->harga)
-                                    <span class="text-sm font-extrabold text-accent">Rp {{ number_format($skema->harga, 0, ',', '.') }}</span>
-                                @else
-                                    <span class="text-xs text-gray-400 font-bold">Hubungi Kami</span>
+                                @if($skema->metode_pelaksanaan)
+                                    <span class="px-3 py-1 rounded-lg text-[10px] font-black tracking-wider uppercase {{ in_array(strtolower($skema->metode_pelaksanaan), ['online', 'jarak jauh']) ? 'bg-blue-50 text-blue-600 border border-blue-100' : 'bg-orange-50 text-orange-600 border border-orange-100' }}">
+                                        {{ $skema->metode_pelaksanaan }}
+                                    </span>
                                 @endif
                             </div>
 
                             <h3 class="font-display font-extrabold text-primary text-xl mb-4 group-hover:text-accent transition-colors leading-tight">
                                 <a href="{{ route('sertifikasi.detail', $skema->id) }}">{{ $skema->nama }}</a>
                             </h3>
+
+                            <div class="mb-6 bg-gray-50/50 p-4 rounded-2xl border border-gray-100/50">
+                                <span class="text-[9px] font-black text-gray-400 uppercase tracking-widest block mb-1">Biaya Investasi</span>
+                                @if($skema->harga)
+                                    <span class="text-lg font-black text-accent">Rp {{ number_format($skema->harga, 0, ',', '.') }}</span>
+                                @else
+                                    <span class="text-sm font-bold text-gray-400">Hubungi Kami</span>
+                                @endif
+                            </div>
 
                             @if($skema->description)
                                 <p class="text-gray-500 text-sm leading-relaxed mb-6">{{ $skema->description }}</p>

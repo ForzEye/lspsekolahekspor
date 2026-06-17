@@ -120,17 +120,28 @@
                     {{-- Card Content --}}
                     <div class="p-8 flex-1 flex flex-col justify-between">
                         <div>
-                            <h3 class="text-xl font-bold font-display text-primary mb-1 group-hover:text-accent transition-colors">
-                                <a href="{{ route('sertifikasi.detail', $program->id) }}">{{ $program->nama }}</a>
-                            </h3>
                             <div class="flex items-center justify-between mb-4">
-                                <span class="text-xs font-mono font-bold text-accent">{{ $program->kode }}</span>
-                                @if($program->harga)
-                                    <span class="text-sm font-extrabold text-accent">Rp {{ number_format($program->harga, 0, ',', '.') }}</span>
-                                @else
-                                    <span class="text-xs text-gray-400 font-bold">Hubungi Kami</span>
+                                <span class="px-3 py-1 bg-gray-50 rounded-lg text-[10px] font-mono text-gray-400 font-bold tracking-widest">{{ $program->kode }}</span>
+                                @if($program->metode_pelaksanaan)
+                                    <span class="px-3 py-1 rounded-lg text-[10px] font-black tracking-wider uppercase {{ in_array(strtolower($program->metode_pelaksanaan), ['online', 'jarak jauh']) ? 'bg-blue-50 text-blue-600 border border-blue-100' : 'bg-orange-50 text-orange-600 border border-orange-100' }}">
+                                        {{ $program->metode_pelaksanaan }}
+                                    </span>
                                 @endif
                             </div>
+
+                            <h3 class="text-xl font-bold font-display text-primary mb-4 group-hover:text-accent transition-colors">
+                                <a href="{{ route('sertifikasi.detail', $program->id) }}">{{ $program->nama }}</a>
+                            </h3>
+
+                            <div class="mb-6 bg-gray-50/50 p-4 rounded-2xl border border-gray-100/50">
+                                <span class="text-[9px] font-black text-gray-400 uppercase tracking-widest block mb-1">Biaya Investasi</span>
+                                @if($program->harga)
+                                    <span class="text-lg font-black text-accent">Rp {{ number_format($program->harga, 0, ',', '.') }}</span>
+                                @else
+                                    <span class="text-sm font-bold text-gray-400">Hubungi Kami</span>
+                                @endif
+                            </div>
+
                             <p class="text-gray-500 text-sm line-clamp-3 mb-6">
                                 {{ $program->description }}
                             </p>

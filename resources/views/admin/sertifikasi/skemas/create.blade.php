@@ -59,8 +59,10 @@
                 <div class="grid sm:grid-cols-4 gap-4">
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1.5">Metode Pelaksanaan</label>
-                        <input type="text" name="metode_pelaksanaan" value="{{ old('metode_pelaksanaan') }}" placeholder="Tatap Muka / Jarak Jauh"
-                               class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-primary/30 outline-none">
+                        <select name="metode_pelaksanaan" class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-primary/30 outline-none">
+                            <option value="Online" {{ old('metode_pelaksanaan') == 'Online' ? 'selected' : '' }}>Online</option>
+                            <option value="Offline" {{ old('metode_pelaksanaan') == 'Offline' ? 'selected' : '' }}>Offline</option>
+                        </select>
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1.5">Masa Berlaku</label>
