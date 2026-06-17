@@ -51,11 +51,11 @@
                     <a href="{{ route('admin.dashboard') }}" class="text-xs font-bold text-gray-400 hover:text-primary transition-colors">CMS Admin</a>
                 @endauth
                 <a href="https://lsplpksekolahekspor.nasonline.id/login" target="_blank" rel="noopener"
-                   class="bg-white border-2 border-primary/10 hover:border-primary text-primary font-bold rounded-2xl px-6 py-2.5 text-sm transition-all duration-300 hover:scale-105 active:scale-95 shadow-sm">
+                   class="inline-flex items-center justify-center h-11 bg-white border border-primary/10 hover:border-primary text-primary font-bold rounded-2xl px-5 text-xs whitespace-nowrap transition-all duration-300 hover:scale-105 active:scale-95 shadow-sm">
                     Dashboard Sertifikasi
                 </a>
                 <a href="{{ route('daftar') }}"
-                   class="bg-accent hover:bg-accent-dark text-white font-bold rounded-2xl px-6 py-3 text-sm transition-all duration-300 hover:scale-105 active:scale-95 shadow-glow hover:shadow-orange-200">
+                   class="inline-flex items-center justify-center h-11 bg-accent hover:bg-accent-dark text-white font-bold rounded-2xl px-5 text-xs whitespace-nowrap transition-all duration-300 hover:scale-105 active:scale-95 shadow-glow hover:shadow-orange-200">
                     Daftar Sekarang
                 </a>
             </div>
