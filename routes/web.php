@@ -52,6 +52,7 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
 
     // Certification
     Route::prefix('sertifikasi')->name('sertifikasi.')->group(function () {
+        Route::post('skemas/{skema}/duplicate', [SertifikasiSkemaController::class, 'duplicate'])->name('skemas.duplicate');
         Route::resource('skemas', SertifikasiSkemaController::class);
         Route::resource('alurs', SertifikasiAlurController::class);
     });

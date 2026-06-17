@@ -103,6 +103,16 @@ class SertifikasiSkemaController extends Controller
         return redirect()->route('admin.sertifikasi.skemas.index')->with('success', 'Skema Sertifikasi berhasil diperbarui.');
     }
 
+    public function duplicate(SertifikasiSkema $skema)
+    {
+        $newSkema = $skema->replicate();
+        $newSkema->nama = $newSkema->nama . ' (Copy)';
+        $newSkema->save();
+
+        return redirect()->route('admin.sertifikasi.skemas.edit', $newSkema)
+            ->with('success', 'Skema Sertifikasi berhasil diduplikasi. Silakan sesuaikan datanya.');
+    }
+
     public function destroy(SertifikasiSkema $skema)
     {
         if ($skema->image) {

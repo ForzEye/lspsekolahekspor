@@ -69,6 +69,15 @@
                             </td>
                             <td class="px-8 py-6">
                                 <div class="flex items-center justify-end gap-3">
+                                    <form action="{{ route('admin.sertifikasi.skemas.duplicate', $skema) }}" method="POST" class="inline">
+                                        @csrf
+                                        <button type="submit" title="Duplikasi Skema"
+                                                class="p-2.5 rounded-xl bg-white border border-gray-100 text-amber-600 hover:bg-amber-600 hover:text-white transition-all shadow-sm">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                                                <path d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                        </button>
+                                    </form>
                                     <a href="{{ route('admin.sertifikasi.skemas.edit', $skema) }}"
                                        class="p-2.5 rounded-xl bg-white border border-gray-100 text-primary hover:bg-primary hover:text-white transition-all shadow-sm">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
