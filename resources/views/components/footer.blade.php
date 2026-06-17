@@ -102,8 +102,33 @@
                         <span class="text-white/60 text-[11px] font-black uppercase tracking-tight">{{ $globalContact->office_hours ?? $globalSettings->get('contact_hours', 'Senin - Jumat: 08.00 - 17.00 WIB') }}</span>
                     </li>
                 </ul>
+                
             </div>
         </div>
+
+        {{-- Full-Width Lokasi Kami Map --}}
+        @if($globalContact && $globalContact->maps_embed_url)
+            <div class="border-t border-white/10 pt-10 pb-8">
+                <h4 class="font-display font-black text-white mb-6 text-xs uppercase tracking-widest leading-none">Lokasi Kami</h4>
+                <div class="rounded-3xl overflow-hidden border border-white/10 shadow-lg relative w-full" style="height: 320px;" id="footer-maps-embed-container">
+                    @if(str_contains($globalContact->maps_embed_url, '<iframe'))
+                        {!! $globalContact->maps_embed_url !!}
+                    @else
+                        <iframe src="{{ $globalContact->maps_embed_url }}" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    @endif
+                </div>
+                <style>
+                    #footer-maps-embed-container iframe {
+                        width: 100% !important;
+                        height: 100% !important;
+                        border: 0 !important;
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                    }
+                </style>
+            </div>
+        @endif
 
         {{-- Bottom Bar --}}
         <div class="border-t border-white/10 py-5 flex flex-col sm:flex-row justify-between items-center gap-3">
